@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fratello</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;900&family=Arvo:wght@700&family=Caveat:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #161616;
+    --bg-alt: #2D2D2D;
+    --orange: #C1501A;
+    --gold: #F2691D;
+    --white: #FFFFFF;
+    --brown: #5B3A1A;
+    --beige: #F3E4CC;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+  }
+  /* ===== TOPBAR / NAV ===== */
+  .topbar{
+    background:var(--white);
+    padding:16px 6vw;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    max-width:1300px;
+    margin:0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo-icon{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+    border-radius:50%;
+    object-fit:cover;
+  }
+  .logo-text b{
+    font-family:'Arvo',serif;
+    font-weight:700;
+    font-size:1.4rem;
+    letter-spacing:0.5px;
+    line-height:1;
+    color:var(--gold);
+  }
+  .logo-text small{
+    display:block;
+    color:var(--orange);
+    font-size:0.62rem;
+    letter-spacing:2px;
+    font-weight:600;
+    margin-top:2px;
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    list-style:none;
+  }
+  .nav-links a{
+    color:var(--bg);
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:600;
+    letter-spacing:1px;
+    padding-bottom:6px;
+    border-bottom:2px solid transparent;
+  }
+  .nav-links a.active{
+    color:var(--bg);
+    border-bottom-color:var(--gold);
+  }
+  .btn-order{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--gold);
+    color:var(--white);
+    font-weight:600;
+    font-size:0.8rem;
+    letter-spacing:0.5px;
+    padding:12px 22px;
+    border-radius:30px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+
+  /* ===== CARRINHO FLUTUANTE (mobile) ===== */
+  .cart-float{
+    display:none;
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    z-index:80;
+    background:var(--gold);
+    color:var(--bg);
+    text-decoration:none;
+    border-radius:30px;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+  }
+  .cart-float-icon{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .cart-float-badge{
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:var(--bg);
+    color:var(--white);
+    font-size:0.65rem;
+    font-weight:700;
+    min-width:16px;
+    height:16px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 4px;
+  }
+  .cart-float-total{
+    font-size:0.8rem;
+    font-weight:700;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(242,105,29,0.14), transparent 40%),
+      var(--bg);
+    padding:56px 6vw 64px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+    max-width:1300px;
+    margin:0 auto;
+  }
+  .hero-media{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-photo{
+    width:100%;
+    max-width:520px;
+    height:auto;
+    -webkit-mask-image: radial-gradient(ellipse 78% 78% at center, black 60%, transparent 100%);
+    mask-image: radial-gradient(ellipse 78% 78% at center, black 60%, transparent 100%);
+  }
+  .hero-copy .eyebrow{
+    color:var(--gold);
+    font-family:'League Spartan',sans-serif;
+    font-weight:700;
+    font-size:1.1rem;
+    font-style:italic;
+    margin-bottom:12px;
+  }
+  .hero-copy h1{
+    font-family:'League Spartan',sans-serif;
+    font-weight:900;
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:0.98;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  .hero-copy h1 .line-gold{ color:var(--gold); display:block; }
+  .hero-copy p.desc{
+    color:#c9c9c9;
+    font-size:0.95rem;
+    line-height:1.6;
+    max-width:420px;
+    margin:20px 0 28px;
+  }
+  .hero-ctas{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    margin-bottom:44px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--gold);
+    color:var(--bg);
+    font-weight:700;
+    font-size:0.85rem;
+    padding:14px 26px;
+    border-radius:30px;
+    text-decoration:none;
+  }
+  .features{
+    display:flex;
+    gap:36px;
+    flex-wrap:wrap;
+  }
+  .feature{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .feature .icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    color:var(--gold);
+  }
+  .feature strong{
+    display:block;
+    font-size:0.8rem;
+    font-weight:600;
+  }
+  .feature span{
+    display:block;
+    font-size:0.7rem;
+    color:#9a9a9a;
+  }
+  /* ===== CATEGORY BAR ===== */
+  .category-bar{
+    background:var(--white);
+    color:var(--bg);
+    border-radius:20px;
+    max-width:1300px;
+    margin:0 auto;
+    padding:32px 24px;
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    position:relative;
+    top:-48px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+  .category-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:8px;
+    padding:0 12px;
+    border-right:1px solid #e6e6e6;
+    cursor:pointer;
+  }
+  .category-item:last-child{ border-right:none; }
+  .category-item .cat-icon{
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--orange);
+  }
+  .category-item strong{
+    font-family:'League Spartan',sans-serif;
+    font-size:0.85rem;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+  }
+  .category-item span{
+    font-size:0.7rem;
+    color:#8a8a8a;
+  }
+
+  /* ===== FAIXA DE SLOGAN ===== */
+  .slogan{
+    background:var(--gold);
+    padding:0 6vw 40px;
+    text-align:center;
+  }
+  .slogan-ribbon{
+    display:inline-block;
+    background:var(--bg);
+    padding:22px 44px;
+    clip-path: polygon(1% 12%, 15% 0%, 40% 5%, 60% 1%, 85% 6%, 99% 0%, 100% 82%, 88% 100%, 60% 93%, 35% 99%, 10% 94%, 0% 100%);
+    margin-bottom:24px;
+  }
+  .slogan-ribbon p{
+    font-family:'League Spartan',sans-serif;
+    font-weight:900;
+    font-size:clamp(1.3rem, 3.2vw, 2.1rem);
+    text-transform:uppercase;
+    line-height:1.2;
+    color:var(--white);
+  }
+  .slogan-ribbon p.destaque{ color:var(--gold); }
+  .slogan-tagline{
+    font-size:clamp(1.1rem, 2.2vw, 1.6rem);
+    margin-bottom:36px;
+  }
+  .slogan-tagline .marca{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.3em;
+    color:var(--orange);
+    margin-right:10px;
+  }
+  .slogan-tagline .sub{
+    font-family:'Poppins',sans-serif;
+    color:var(--white);
+    font-weight:500;
+  }
+
+  /* ===== BADGES (atendimento / delivery / combos) ===== */
+  .badges-row{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    max-width:1300px;
+    margin:0 auto;
+  }
+  .badge-pill{
+    display:flex;
+    align-items:stretch;
+    border-radius:40px;
+    overflow:hidden;
+    background:var(--bg);
+    text-align:left;
+  }
+  .badge-pill .badge-icon-wrap{
+    background:var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 18px;
+    flex-shrink:0;
+    color:var(--bg);
+  }
+  .badge-pill .badge-text{
+    padding:12px 22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .badge-pill .badge-text strong{
+    font-size:0.78rem;
+    letter-spacing:0.3px;
+    color:var(--white);
+  }
+  .badge-pill .badge-text span{
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--gold);
+  }
+
+  /* ===== SOBRE / SLIDESHOW SECTION ===== */
+  .about{
+    background:var(--bg);
+    padding:80px 6vw 100px;
+  }
+  .about-card{
+    max-width:1300px;
+    margin:0 auto;
+    background:var(--beige);
+    border-radius:24px;
+    padding:56px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow-dash{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--orange);
+    font-size:0.8rem;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .eyebrow-dash::before{
+    content:"";
+    width:24px;
+    height:2px;
+    background:var(--orange);
+  }
+  .about-copy h2{
+    font-family:'Arvo',serif;
+    font-weight:700;
+    font-size:clamp(1.8rem, 3vw, 2.6rem);
+    line-height:1.2;
+    color:var(--bg);
+    margin-bottom:20px;
+  }
+  .about-copy p.desc2{
+    color:#5a4a3a;
+    font-size:0.95rem;
+    line-height:1.7;
+    max-width:420px;
+    margin-bottom:28px;
+  }
+  .btn-outline{
+    display:inline-block;
+    border:1.5px solid var(--bg);
+    color:var(--bg);
+    font-size:0.8rem;
+    font-weight:600;
+    letter-spacing:0.5px;
+    padding:14px 30px;
+    border-radius:30px;
+    text-decoration:none;
+  }
+  .slideshow{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/3.4;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 0.7s ease;
+  }
+  .slide.active{ opacity:1; z-index:1; }
+  .slide-dots{
+    position:absolute;
+    bottom:16px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+    z-index:2;
+  }
+  .slide-dots span{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.4);
+    transition:background 0.3s ease;
+  }
+  .slide-dots span.active{ background:var(--gold); }
+  .about-features{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    margin-top:8px;
+  }
+  .about-feature{
+    border-radius:16px;
+    padding:26px;
+    background:var(--orange);
+    color:var(--white);
+  }
+  .about-feature strong{
+    display:block;
+    font-family:'League Spartan',sans-serif;
+    font-size:1rem;
+    letter-spacing:0.3px;
+    margin-bottom:8px;
+  }
+  .about-feature span{
+    display:block;
+    font-size:0.82rem;
+    line-height:1.5;
+    opacity:0.85;
+  }
+
+  /* ===== SOBRE A FRATELLO (rodapé) ===== */
+  .footer-sobre{
+    background:var(--beige);
+    padding:70px 6vw;
+  }
+  .footer-inner{
+    max-width:1300px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+  .footer-info{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:8px;
+  }
+  .footer-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--bg);
+    text-decoration:none;
+    font-size:0.85rem;
+    line-height:1.4;
+  }
+  a.footer-item:hover{ text-decoration:underline; }
+  .footer-item .footer-icon{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:var(--orange);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .footer-photo-wrap img{
+    width:100%;
+    aspect-ratio:4/3;
+    object-fit:cover;
+    border-radius:16px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  /* ===== CATÁLOGO / CARRINHO ===== */
+  .catalogo{
+    background:var(--bg);
+    padding:20px 6vw 100px;
+  }
+  .catalogo-inner{
+    max-width:1300px;
+    margin:0 auto;
+  }
+  .catalogo-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:32px;
+  }
+  .catalogo-head h2{
+    font-family:'Arvo',serif;
+    font-size:clamp(1.8rem, 3vw, 2.4rem);
+    color:var(--white);
+  }
+  .catalogo-controls{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .catalogo-controls select,
+  .catalogo-controls input{
+    background:var(--bg-alt);
+    border:1px solid #444;
+    color:var(--white);
+    padding:10px 16px;
+    border-radius:10px;
+    font-family:'Poppins',sans-serif;
+    font-size:0.85rem;
+  }
+  .catalogo-controls input::placeholder{ color:#999; }
+
+  .categorias-grid{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:16px;
+    margin-bottom:48px;
+  }
+  .categoria-card{
+    background:var(--bg-alt);
+    border-radius:14px;
+    padding:16px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:border-color 0.2s ease;
+  }
+  .categoria-card:hover, .categoria-card.active{ border-color:var(--gold); }
+  .categoria-card .cat-thumb{
+    aspect-ratio:16/10;
+    border-radius:8px;
+    border:2px dashed rgba(255,255,255,0.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#888;
+    font-size:0.65rem;
+    text-align:center;
+    padding:8px;
+    margin-bottom:12px;
+  }
+  .categoria-card strong{
+    display:block;
+    font-size:0.85rem;
+    margin-bottom:2px;
+  }
+  .categoria-card span{
+    font-size:0.72rem;
+    color:var(--gold);
+  }
+
+  .catalogo-body{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:32px;
+    align-items:flex-start;
+  }
+  .categoria-grupo{ margin-bottom:36px; }
+  .categoria-grupo h3{
+    font-family:'League Spartan',sans-serif;
+    color:var(--gold);
+    font-size:1rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:0;
+    padding-bottom:14px;
+    border-bottom:1px solid #333;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    user-select:none;
+  }
+  .categoria-grupo h3 .cat-toggle-icon{
+    transition:transform 1.2s cubic-bezier(.65,0,.35,1);
+    flex:none;
+    font-size:.85rem;
+  }
+  .categoria-grupo.aberta h3 .cat-toggle-icon{ transform:rotate(180deg); }
+  .categoria-grupo .cat-conteudo{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 1.2s cubic-bezier(.65,0,.35,1);
+  }
+  .categoria-grupo.aberta .cat-conteudo{ grid-template-rows:1fr; }
+  .categoria-grupo .cat-conteudo-inner{
+    overflow:hidden;
+  }
+  .categoria-grupo .cat-conteudo-inner > .produto-row:first-child{ margin-top:14px; }
+  .produto-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:var(--bg-alt);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:10px;
+  }
+  .produto-main{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+  }
+  .produto-thumb{
+    width:64px;
+    height:64px;
+    border-radius:10px;
+    object-fit:cover;
+    flex-shrink:0;
+    cursor:pointer;
+  }
+
+  /* ===== LIGHTBOX (foto ampliada) ===== */
+  .lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:rgba(0,0,0,0.85);
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .lightbox.aberto{ display:flex; }
+  .lightbox img{
+    max-width:min(90vw, 700px);
+    max-height:85vh;
+    border-radius:14px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-fechar{
+    position:absolute;
+    top:20px;
+    right:24px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--bg-alt);
+    color:var(--white);
+    border:none;
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+  }
+
+  /* ===== CONTA (login / minha conta) ===== */
+  .btn-conta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:transparent;
+    border:1.5px solid var(--bg);
+    color:var(--bg);
+    font-weight:600;
+    font-size:0.8rem;
+    padding:10px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family:'Poppins',sans-serif;
+  }
+  .overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:rgba(0,0,0,0.85);
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    overflow-y:auto;
+  }
+  .overlay.aberto{ display:flex; }
+  .modal-card{
+    background:var(--beige);
+    color:var(--bg);
+    border-radius:20px;
+    padding:32px;
+    width:100%;
+    max-width:420px;
+    max-height:88vh;
+    overflow-y:auto;
+    position:relative;
+    margin:auto;
+  }
+  .modal-card h3{
+    font-family:'Arvo',serif;
+    font-size:1.3rem;
+    margin-bottom:6px;
+  }
+  .modal-card .modal-sub{
+    font-size:0.82rem;
+    color:#6a5a48;
+    margin-bottom:20px;
+    line-height:1.5;
+  }
+  .modal-fechar{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:none;
+    background:rgba(0,0,0,0.06);
+    color:var(--bg);
+    font-size:1.1rem;
+    cursor:pointer;
+    line-height:1;
+  }
+  .campo{ margin-bottom:16px; }
+  .campo label{
+    display:block;
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:#6a5a48;
+    margin-bottom:6px;
+  }
+  .campo input, .campo textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.15);
+    background:#fff;
+    font-family:'Poppins',sans-serif;
+    font-size:0.88rem;
+    color:var(--bg);
+  }
+  .campo textarea{ resize:vertical; min-height:64px; }
+  .btn-modal{
+    width:100%;
+    background:var(--bg);
+    color:var(--white);
+    border:none;
+    padding:14px;
+    border-radius:30px;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .btn-modal-secundario{
+    width:100%;
+    background:transparent;
+    color:var(--bg);
+    border:1.5px solid var(--bg);
+    padding:12px;
+    border-radius:30px;
+    font-weight:600;
+    font-size:0.82rem;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  .link-discreto{
+    display:inline-block;
+    background:none;
+    border:none;
+    color:var(--orange);
+    font-size:0.8rem;
+    font-weight:600;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:0;
+    margin-top:14px;
+  }
+  .erro-form{
+    color:#a33;
+    font-size:0.78rem;
+    margin:-8px 0 14px;
+  }
+  .secao-conta{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid rgba(0,0,0,0.1);
+  }
+  .secao-conta h4{
+    font-family:'League Spartan',sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:12px;
+  }
+  .endereco-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    background:#fff;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    font-size:0.82rem;
+  }
+  .endereco-card strong{ display:block; margin-bottom:2px; }
+  .endereco-card .endereco-texto{ color:#6a5a48; line-height:1.4; }
+  .endereco-card button{
+    background:none;
+    border:none;
+    color:#a33;
+    font-size:0.75rem;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .btn-add-endereco{
+    background:none;
+    border:1.5px dashed rgba(0,0,0,0.25);
+    color:var(--bg);
+    border-radius:12px;
+    padding:12px;
+    width:100%;
+    font-size:0.8rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-bottom:6px;
+    font-family:'Poppins',sans-serif;
+  }
+  .badge-verificado{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-size:0.75rem;
+    color:#2f7a3c;
+    font-weight:600;
+  }
+  .pedido-card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-top:10px;
+    font-size:0.8rem;
+  }
+  .pedido-card .pedido-topo{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:4px;
+    font-weight:600;
+  }
+  .status-pill{
+    display:inline-block;
+    padding:2px 10px;
+    border-radius:20px;
+    font-size:0.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    background:var(--gold);
+    color:var(--white);
+    white-space:nowrap;
+  }
+
+  .produto-info strong{
+    display:block;
+    font-size:0.92rem;
+    margin-bottom:4px;
+  }
+  .produto-info p{
+    font-size:0.78rem;
+    color:#a8a8a8;
+    line-height:1.4;
+    max-width:480px;
+    margin-bottom:6px;
+  }
+  .produto-info .preco{
+    color:var(--gold);
+    font-weight:600;
+    font-size:0.88rem;
+  }
+  .btn-add{
+    background:var(--gold);
+    color:var(--bg);
+    border:none;
+    font-weight:700;
+    font-size:0.78rem;
+    padding:10px 18px;
+    border-radius:24px;
+    cursor:pointer;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  .stepper button{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold);
+    font-size:1rem;
+    cursor:pointer;
+    line-height:1;
+  }
+  .stepper span{ min-width:16px; text-align:center; font-weight:600; }
+  .sem-resultado{ color:#888; font-size:0.85rem; padding:20px 0; }
+
+  .sacola{
+    position:sticky;
+    top:20px;
+    background:var(--beige);
+    border-radius:18px;
+    padding:26px;
+    color:var(--bg);
+  }
+  .sacola h3{
+    font-family:'Arvo',serif;
+    font-size:1.1rem;
+    margin-bottom:16px;
+  }
+  .sacola-vazia{
+    font-size:0.85rem;
+    color:#6a5a48;
+    line-height:1.6;
+  }
+  .sacola-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:0.82rem;
+    padding:8px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+  }
+  .sacola-item .nome{ font-weight:600; }
+  .sacola-item .qtd{ color:#6a5a48; font-size:0.75rem; }
+  .sacola-item .remover{
+    background:none;
+    border:none;
+    color:#a33;
+    cursor:pointer;
+    font-size:0.8rem;
+  }
+  .sacola-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:16px 0;
+    font-size:0.95rem;
+    font-weight:700;
+  }
+  .btn-whatsapp{
+    width:100%;
+    background:var(--bg);
+    color:var(--white);
+    border:none;
+    padding:14px;
+    border-radius:30px;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .btn-whatsapp:disabled{ opacity:0.4; cursor:not-allowed; }
+  .sacola-nota{
+    font-size:0.7rem;
+    color:#6a5a48;
+    margin-top:12px;
+    line-height:1.5;
+  }
+
+  @media (max-width: 900px){
+    .about-card{ padding:32px 20px; grid-template-columns:1fr 1fr; gap:16px; }
+    .about-copy{ grid-column:1 / -1; }
+    .slideshow{ grid-column:2; grid-row:2; aspect-ratio:1/1.1; }
+    .about-features{
+      grid-column:1;
+      grid-row:2;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:0;
+    }
+    .about-feature{ padding:14px; border-radius:12px; }
+    .about-feature strong{ font-size:0.72rem; margin-bottom:4px; }
+    .about-feature span{ font-size:0.62rem; line-height:1.35; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .categorias-grid{ grid-template-columns:repeat(2, 1fr); }
+    .catalogo-body{ grid-template-columns:1fr; }
+    .sacola{ position:static; }
+    .nav-links{ order:3; width:100%; justify-content:center; }
+    .category-bar{ grid-template-columns:repeat(3, 1fr); row-gap:24px; top:0; margin-top:24px; }
+    .category-item{ border-right:none; border-bottom:1px solid #e6e6e6; padding-bottom:16px; }
+    .footer-inner{ grid-template-columns:1fr; }
+    .slogan{ text-align:left; }
+    .slogan-tagline{ text-align:left; }
+    .badges-row{ justify-content:flex-start; }
+    .badge-pill{ width:100%; }
+    .cart-float.has-items{ display:flex; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <nav>
+    <div class="logo">
+      <img class="logo-icon" src="assets/logo.jpg" alt="Fratello Burger">
+      <div class="logo-text">
+        <b>FRATELLO</b>
+        <small>ARTESANAL. NA BRASA. DE VERDADE.</small>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">INÍCIO</a></li>
+      <li><a href="#catalogo">CARDÁPIO</a></li>
+      <li><a href="#sobre">SOBRE</a></li>
+    </ul>
+    <button id="btn-conta" class="btn-conta" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="btn-conta-label">Entrar</span>
+    </button>
+    <a href="#catalogo" class="btn-order">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      PEDIR AGORA
+    </a>
+  </nav>
+</header>
+
+<a href="#sacola" class="cart-float" id="cart-float">
+  <span class="cart-float-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 7v13a2 2 0 002 2h14a2 2 0 002-2V7l-3-5z"/><path d="M3 7h18"/><path d="M16 11a4 4 0 01-8 0"/></svg>
+    <span class="cart-float-badge" id="cart-float-badge">0</span>
+  </span>
+  <span class="cart-float-total" id="cart-float-total">R$ 0,00</span>
+</a>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Chama os amigos</div>
+      <h1>FRATELLO<span class="line-gold">BURGUER</span></h1>
+      <p class="desc">Hambúrguer artesanal grelhado na brasa, ingrediente de verdade e porção que enche.</p>
+
+      <div class="hero-ctas">
+        <a href="#catalogo" class="btn-primary">VER CARDÁPIO →</a>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <span class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="15" height="10" rx="1"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/></svg>
+          </span>
+          <div><strong>ENTREGA RÁPIDA</strong><span>Direto no seu endereço</span></div>
+        </div>
+        <div class="feature">
+          <span class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6.3 6.9.9-5 4.9 1.2 6.9L12 17.8 5.9 21l1.2-6.9-5-4.9 6.9-.9z"/></svg>
+          </span>
+          <div><strong>QUALIDADE DE VERDADE</strong><span>Sem enrolação</span></div>
+        </div>
+        <div class="feature">
+          <span class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41L11 22l-9-9 9-9 9.59 9.41z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/></svg>
+          </span>
+          <div><strong>PEDIDO FÁCIL</strong><span>Monte seu pedido aqui no site</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <img class="hero-photo" src="assets/hero.jpg" alt="Combo Fratello Burger com fritas, nuggets e molhos">
+    </div>
+  </div>
+</section>
+
+<div class="category-bar">
+  <div class="category-item">
+    <span class="cat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10c0-3 3.5-6 8-6s8 3 8 6"/><path d="M3 12h18"/><path d="M4 14h16l-1 3a2 2 0 01-2 2H7a2 2 0 01-2-2z"/></svg></span>
+    <strong>LANCHES 12 e 18CM</strong>
+    <span>Do tamanho da sua fome</span>
+  </div>
+  <div class="category-item">
+    <span class="cat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2-2.96 0-7-1-8c0 3.038-1.773 4.741-3 6c-1.226 1.26-2 3.24-2 5a6 6 0 1 0 12 0c0-1.532-1.056-3.94-2-5c-1.786 3-2.791 3-4 2z"/></svg></span>
+    <strong>BRASA</strong>
+    <span>Disponível nas sextas, sábados e domingos</span>
+  </div>
+  <div class="category-item">
+    <span class="cat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/></svg></span>
+    <strong>COMBOS FAMÍLIA</strong>
+    <span>Pra dividir</span>
+  </div>
+  <div class="category-item">
+    <span class="cat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3l1 18M12 3l0 18M16 3l-1 18"/><path d="M6 3h12l-1 3H7z"/></svg></span>
+    <strong>PORÇÕES</strong>
+    <span>Batata &amp; mandioca</span>
+  </div>
+  <div class="category-item">
+    <span class="cat-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10l-1 4H8z"/><path d="M8 7l1 13a1 1 0 001 1h4a1 1 0 001-1l1-13"/></svg></span>
+    <strong>BEBIDAS</strong>
+    <span>Geladinhas</span>
+  </div>
+</div>
+
+<section class="slogan">
+  <div class="slogan-ribbon">
+    <p>Bom demais é compartilhar</p>
+    <p class="destaque">Sabor, risadas e amor!</p>
+  </div>
+  <div class="slogan-tagline">
+    <span class="marca">Fratello Burguer</span><span class="sub">O Lugar do Seu Melhor Lanche</span>
+  </div>
+
+  <div class="badges-row">
+    <div class="badge-pill">
+      <span class="badge-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+      </span>
+      <span class="badge-text"><strong>ATENDIMENTO</strong><span>DE DOMINGO A DOMINGO!</span></span>
+    </div>
+    <div class="badge-pill">
+      <span class="badge-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/><path d="M2 18h2l2-9h7l3 5h4a1 1 0 011 1v3h-2M9 9V6h5"/><path d="M2 14h9"/></svg>
+      </span>
+      <span class="badge-text"><strong>TEMOS DELIVERY!</strong><span>Rápido, prático e saboroso</span></span>
+    </div>
+    <div class="badge-pill">
+      <span class="badge-icon-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/></svg>
+      </span>
+      <span class="badge-text"><strong>COMBOS PARA TODA FAMÍLIA!</strong><span>Perfeito pra compartilhar</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="diferenciais">
+  <div class="about-card">
+    <div class="about-copy">
+      <div class="eyebrow-dash">Diferenciais</div>
+      <h2>Sabor de verdade,<br>direto na brasa</h2>
+      <p class="desc2">Hambúrguer artesanal feito na hora, porção farta e aquele clima de churrasco com os amigos. Sem gourmetização, sem enrolação — só sabor de verdade e preço justo.</p>
+      <a href="#catalogo" class="btn-outline">Ver Cardápio</a>
+    </div>
+
+    <div class="slideshow" id="slideshow">
+      <img class="slide active" src="assets/sobre-1.jpg" alt="Alcatra na chapa Fratello">
+      <img class="slide" src="assets/sobre-2.jpg" alt="Combo Fratello">
+      <img class="slide" src="assets/sobre-3.jpg" alt="Brasa Clássico Duplo">
+      <div class="slide-dots">
+        <span class="active"></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="about-features">
+      <div class="about-feature">
+        <strong>Ingredientes Frescos</strong>
+        <span>Pão, carne e molhos no capricho da casa, todo dia.</span>
+      </div>
+      <div class="about-feature">
+        <strong>Direto na Brasa</strong>
+        <span>Cada burger passa pelo fogo antes de chegar até você.</span>
+      </div>
+      <div class="about-feature">
+        <strong>Porção Farta</strong>
+        <span>Aqui ninguém sai com fome. Prometido.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="catalogo" id="catalogo">
+  <div class="catalogo-inner">
+    <div class="catalogo-head">
+      <h2>Cardápio</h2>
+      <div class="catalogo-controls">
+        <select id="filtro-categoria"></select>
+        <input type="search" id="busca-cardapio" placeholder="Buscar no cardápio...">
+      </div>
+    </div>
+
+    <div class="categorias-grid" id="categorias-grid"></div>
+
+    <div class="catalogo-body">
+      <div class="produtos-lista" id="produtos-lista"></div>
+
+      <aside class="sacola" id="sacola">
+        <h3>Sacola</h3>
+        <div id="sacola-itens">
+          <p class="sacola-vazia">Sua sacola está vazia. Escolha algo no cardápio pra começar.</p>
+        </div>
+        <div class="sacola-total" id="sacola-total" style="display:none">
+          <span>Total</span><strong id="sacola-total-valor">R$ 0,00</strong>
+        </div>
+        <button id="btn-whatsapp" class="btn-whatsapp" disabled>Finalizar Pedido</button>
+        <p class="sacola-nota">O pedido é enviado direto pro WhatsApp. Pagamento e retirada/entrega combinados por lá.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="footer-sobre" id="sobre">
+  <div class="footer-inner">
+    <div class="about-copy">
+      <div class="eyebrow-dash">Sobre a Fratello</div>
+      <h2>Desde 2017 servindo<br>sabor de verdade</h2>
+      <p class="desc2">A Fratello Burger é uma hamburgueria artesanal em Santa Tereza do Oeste - PR, nota 4,6★ no Google (94 avaliações). Preparo na brasa, do jeito que a família gosta.</p>
+
+      <div class="footer-info">
+        <a class="footer-item" href="https://maps.app.goo.gl/PjVUcJEVBY9Fv6jw5" target="_blank" rel="noopener">
+          <span class="footer-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7.3 7-12a7 7 0 10-14 0c0 4.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </span>
+          <span>R. Duque de Caxias, 556 - Vila Verde, Santa Tereza do Oeste - PR, 85825-000</span>
+        </a>
+        <div class="footer-item">
+          <span class="footer-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </span>
+          <span>A partir das 18 horas, de domingo a domingo</span>
+        </div>
+        <a class="footer-item js-whatsapp-link" href="#" target="_blank" rel="noopener">
+          <span class="footer-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 01-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1121 11.5z"/></svg>
+          </span>
+          <span>(demonstração)</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-photo-wrap">
+      <img src="assets/fachada.png" alt="Fachada da Fratello Burger">
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-fechar" id="lightbox-fechar" aria-label="Fechar">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div class="overlay" id="modal-entrar">
+  <div class="modal-card">
+    <button class="modal-fechar" id="fechar-entrar" aria-label="Fechar">✕</button>
+    <h3>Entrar</h3>
+    <p class="modal-sub">Informe seu nome e WhatsApp pra gente identificar seu pedido e agilizar as próximas compras.</p>
+    <form id="form-entrar">
+      <div class="campo">
+        <label for="entrar-nome">Seu nome</label>
+        <input type="text" id="entrar-nome" placeholder="Como te chamamos?" pattern="[A-Za-zÀ-ÖØ-öø-ÿ' ]{2,60}" title="Só letras e espaços, mínimo 2 caracteres" maxlength="60" autocomplete="name" required>
+      </div>
+      <div class="campo">
+        <label for="entrar-telefone">WhatsApp</label>
+        <input type="tel" id="entrar-telefone" placeholder="(45) 99999-9999" inputmode="numeric" maxlength="15" pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Formato: (45) 99999-9999" autocomplete="tel" required>
+      </div>
+      <p class="erro-form" id="entrar-erro" style="display:none"></p>
+      <button type="submit" class="btn-modal">Continuar</button>
+    </form>
+    <button class="link-discreto" id="abrir-login-email" type="button">Já tem conta? Entrar com e-mail</button>
+    <form id="form-login-email" style="display:none">
+      <div class="secao-conta">
+        <div class="campo">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" placeholder="seuemail@exemplo.com" pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Digite um e-mail válido" autocomplete="email" required>
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input type="password" id="login-senha" placeholder="Sua senha" required minlength="6" autocomplete="current-password">
+        </div>
+        <p class="erro-form" id="login-erro" style="display:none"></p>
+        <button type="submit" class="btn-modal">Entrar com e-mail</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="modal-conta">
+  <div class="modal-card">
+    <button class="modal-fechar" id="fechar-conta" aria-label="Fechar">✕</button>
+    <h3>Minha conta</h3>
+
+    <div class="campo">
+      <label for="conta-nome">Seu nome</label>
+      <input type="text" id="conta-nome" placeholder="Como devemos te chamar?" pattern="[A-Za-zÀ-ÖØ-öø-ÿ' ]{2,60}" title="Só letras e espaços, mínimo 2 caracteres" maxlength="60" autocomplete="name">
+    </div>
+    <p class="modal-sub" id="conta-telefone-exibe"></p>
+
+    <div class="campo">
+      <label for="conta-observacao">Observação padrão</label>
+      <textarea id="conta-observacao" placeholder="Ex: interfone 12, deixar na portaria"></textarea>
+    </div>
+
+    <div class="secao-conta">
+      <h4>Endereços salvos</h4>
+      <div id="lista-enderecos"></div>
+      <button type="button" class="btn-add-endereco" id="btn-mostrar-form-endereco">+ Adicionar endereço</button>
+      <form id="form-endereco" style="display:none">
+        <div class="campo">
+          <label for="end-rotulo">Nome do endereço</label>
+          <input type="text" id="end-rotulo" placeholder="Ex: Casa, Trabalho" maxlength="40" required>
+        </div>
+        <div class="campo">
+          <label for="end-rua">Rua e número</label>
+          <input type="text" id="end-rua" placeholder="Rua Duque de Caxias, 556" maxlength="120" required>
+        </div>
+        <div class="campo">
+          <label for="end-bairro">Bairro</label>
+          <input type="text" id="end-bairro" placeholder="Vila Verde" maxlength="60">
+        </div>
+        <div class="campo">
+          <label for="end-complemento">Complemento / referência</label>
+          <input type="text" id="end-complemento" placeholder="Ex: apto 3, perto do mercado" maxlength="80">
+        </div>
+        <button type="submit" class="btn-modal">Salvar endereço</button>
+        <button type="button" class="btn-modal-secundario" id="btn-cancelar-endereco">Cancelar</button>
+      </form>
+    </div>
+
+    <div class="secao-conta" id="secao-email">
+      <h4>Conta com e-mail</h4>
+      <div id="email-conteudo"></div>
+    </div>
+
+    <div class="secao-conta">
+      <h4>Meus pedidos</h4>
+      <button type="button" class="btn-modal-secundario" id="btn-ver-pedidos">Ver meus pedidos</button>
+      <div id="lista-pedidos"></div>
+    </div>
+
+    <button type="button" class="link-discreto" id="btn-sair">Sair da conta</button>
+  </div>
+</div>
+
+<script>
+  function avisoDemo(){
+    alert('Este \u00e9 um projeto de demonstra\u00e7\u00e3o de portf\u00f3lio. Nesta vers\u00e3o p\u00fablica o pedido n\u00e3o \u00e9 enviado de verdade \u2014 em produ\u00e7\u00e3o ele seguiria via WhatsApp para a loja.');
+  }
+
+  var btnContaEl = document.getElementById('btn-conta');
+  if (btnContaEl) btnContaEl.style.display = 'none';
+
+  (function(){
+    const slides = document.querySelectorAll('#slideshow .slide');
+    const dots = document.querySelectorAll('#slideshow .slide-dots span');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }, 3000);
+  })();
+
+  document.querySelectorAll('.js-whatsapp-link').forEach(el => {
+    el.href = '#';
+    el.addEventListener('click', e => { e.preventDefault(); avisoDemo(); });
+  });
+
+  (function(){
+    const MENU = [
+      { id:'familia', nome:'Para Toda Família', itens:[
+        { nome:'Alcatra na Chapa', desc:'830g de alcatra bovina. Escolha porção de batata, polenta ou mandioca. (Serve 4 a 5 adultos)', preco:120.00, img:'assets/catalogo/alcatra-na-chapa.jpg' },
+        { nome:'420 Combo Família', desc:'400g filé de frango, 400g mandioca frita, 400g polenta frita, 400g batata frita, 300g calabresa, 400g filé de tilápia frita, 1x salada 18cm, 1 molho de alho, 1 molho barbecue (não acompanha bebida)', preco:109.00, img:'assets/catalogo/combo-familia.jpg' },
+        { nome:'Combo Fratello', desc:'400g filé de frango frito, 400g polenta frita, 400g batata frita, 300g calabresa, 02x saladas 12cm, 1 molho de alho, 1 molho barbecue (não acompanha bebida)', preco:79.00, img:'assets/catalogo/combo-fratello.jpg' },
+        { nome:'Torre Batata Fratello', desc:'1kg e meio de batata, calabresa, bacon, cheddar cremoso, mussarela', preco:90.00, img:'assets/catalogo/torre-batata-fratello.jpg' },
+        { nome:'Torre Batata Especial', desc:'1kg e meio de batata, alcatra em cubos, calabresa, bacon, mussarela, cheddar cremoso', preco:99.00, img:'assets/catalogo/torre-batata-especial.jpg' },
+        { nome:'Fratelinho Kids', desc:'X Burger 12cm + 200g de batata Smiles', preco:24.00 },
+      ]},
+      { id:'porcoes', nome:'Porções', itens:[
+        { nome:'Batata Frita 500g', desc:'', preco:26.00, img:'assets/catalogo/batata-frita.jpg' },
+        { nome:'Batata Frita 1kg', desc:'', preco:32.00, img:'assets/catalogo/batata-frita.jpg' },
+        { nome:'Mandioca Frita 500g', desc:'', preco:29.00 },
+        { nome:'Mandioca Frita 1kg', desc:'', preco:37.00 },
+        { nome:'Polenta Frita 500g', desc:'', preco:26.00 },
+        { nome:'Polenta Frita 1kg', desc:'', preco:32.00 },
+        { nome:'Calabresa 500g', desc:'', preco:29.00 },
+        { nome:'Calabresa 1kg', desc:'', preco:49.00 },
+        { nome:'Filé de Frango Frito 500g', desc:'', preco:29.00 },
+        { nome:'Filé de Frango Frito 1kg', desc:'', preco:40.00 },
+        { nome:'Filé de Tilápia 500g', desc:'', preco:49.00 },
+        { nome:'Filé de Tilápia 1kg', desc:'', preco:79.00 },
+        { nome:'Batatas Smiles 25 unid', desc:'', preco:32.00 },
+        { nome:'Dadinho de Tapioca com Queijo Coalho 700g', desc:'', preco:42.00 },
+      ]},
+      { id:'petiscos', nome:'Petiscos', itens:[
+        { nome:'Enroladinho de Tilápia com Bacon', desc:'500g', preco:50.00 },
+        { nome:'Enroladinho de Tilápia com Queijo Mussarela', desc:'500g', preco:50.00 },
+        { nome:'Bolinho de Carne Seca 15 unid', desc:'', preco:42.00 },
+      ]},
+      { id:'brasa', nome:'Brasa — sexta, sábado e domingo', itens:[
+        { nome:'Burger na Brasa', desc:'Pão brioche 11cm, 190g de hambúrguer artesanal bovino grelhado na Parrilla, maionese especial e queijo prato. Acompanha 200g batata frita e coca lata 310ml.', preco:35.00, img:'assets/catalogo/burguer-brasa.jpg' },
+        { nome:'Bacon na Brasa', desc:'Pão brioche 11cm, hambúrguer artesanal bovino grelhado na Parrilla 190g, bacon, alface americana, tomate, maionese especial e queijo prato', preco:37.00, img:'assets/catalogo/bacon-brasa.jpg' },
+        { nome:'Clássico na Brasa', desc:'Pão brioche 11cm, 190g hambúrguer artesanal bovino grelhado na Parrilla, alface americana, tomate, maionese especial e queijo prato. Acompanha 200g batata frita e coca lata 310ml.', preco:35.00 },
+        { nome:'Clássico Duplo na Brasa', desc:'Pão brioche 11cm, 2 hambúrguer artesanal bovino grelhado na Parrilla, alface americana, tomate, maionese especial e queijo prato. Acompanha 200g batata frita e coca lata 310ml.', preco:45.00, img:'assets/catalogo/classico-duplo-brasa.jpg' },
+        { nome:'Cebola Agridoce na Brasa', desc:'Pão brioche 11cm, 190g hambúrguer artesanal bovino grelhado na Parrilla, cebola caramelizada, alface americana, tomate, maionese especial, queijo prato. Acompanha 200g batata frita e coca lata 310ml.', preco:35.00, img:'assets/catalogo/cebola-agridoce-brasa.jpg' },
+        { nome:'Picles na Brasa', desc:'Pão brioche 11cm, hambúrguer artesanal bovino grelhado na Parrilla 190g, picles, alface americana, tomate, maionese especial e queijo prato', preco:35.00, img:'assets/catalogo/picles-brasa.jpg' },
+        { nome:'Frango Crocante', desc:'Pão brioche 11cm, 170g de hambúrguer de frango empanado e frito, alface americana, tomate, maionese especial e queijo prato.', preco:36.00, img:'assets/catalogo/frango-crocante.jpg' },
+        { nome:'Cheddar na Brasa', desc:'Pão brioche 11cm, hambúrguer artesanal bovino grelhado na Parrilla 190g, queijo cheddar, alface americana, tomate e maionese especial.', preco:37.00, img:'assets/catalogo/cheddar-brasa.jpg' },
+      ]},
+      { id:'lanches', nome:'Lanches 12cm e 18cm', itens:[
+        { nome:'X Burguer 12cm', desc:'Pão 12cm, hambúrguer artesanal bovino, mussarela, presunto, maionese artesanal, catchup e mostarda.', preco:17.00 },
+        { nome:'X Salada 12cm', desc:'Pão 12cm, hambúrguer bovino artesanal, mussarela, presunto, tomate, alface, milho, maionese artesanal, catchup e mostarda.', preco:17.00 },
+        { nome:'X Bacon 12cm', desc:'Pão 12cm, hambúrguer bovino, bacon, mussarela, presunto, tomate, alface, milho, maionese artesanal, catchup e mostarda.', preco:19.50 },
+        { nome:'X Calabresa 12cm', desc:'Pão 12cm, hambúrguer bovino artesanal, calabresa, mussarela, presunto, tomate, alface, milho, maionese artesanal, catchup e mostarda.', preco:19.50 },
+        { nome:'X Frango 12cm', desc:'Pão 12cm, hambúrguer bovino artesanal, frango desfiado, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup e mostarda.', preco:19.50 },
+        { nome:'X Egg 12cm', desc:'Pão 12cm, hambúrguer bovino, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup e mostarda', preco:18.50 },
+        { nome:'X Tudo 12cm', desc:'Pão 12cm, hambúrguer bovino artesanal, frango desfiado, bacon, calabresa, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:27.50 },
+        { nome:'X do Chef Alcatra e Bacon 12cm', desc:'Pão 12cm, alcatra em cubos, bacon, tomate, mussarela, catupiry e batata palha', preco:29.50 },
+        { nome:'X Burger 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, mussarela, presunto, maionese artesanal, ketchup e mostarda', preco:19.00 },
+        { nome:'X Salada 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:19.00 },
+        { nome:'X Egg 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:22.00 },
+        { nome:'X Dog 18cm', desc:'Pão 18cm, salsicha, frango desfiado, molho especial, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:21.00 },
+        { nome:'X Calabresa 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, calabresa, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:24.90 },
+        { nome:'X Bagual / Bacon com Cheddar 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, bacon, cheddar, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:25.00 },
+        { nome:'X Pernil com Abacaxi 18cm', desc:'Pão 18cm, pernil suíno desfiado, abacaxi em cubos, mussarela, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:24.90 },
+        { nome:'X Frango 18cm', desc:'Pão 18cm, frango desfiado, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:23.00 },
+        { nome:'X Acebolado 18cm', desc:'Pão 18cm, alcatra em cubos, cebola meia lua, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:29.50, img:'assets/catalogo/x-acebolado-18cm.jpg' },
+        { nome:'X Alcatra 18cm', desc:'Pão 18cm, alcatra em cubos, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:29.50, img:'assets/catalogo/x-alcatra-18cm.jpg' },
+        { nome:'X Bacon 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, bacon, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:24.00, img:'assets/catalogo/x-bacon-18cm.jpg' },
+        { nome:'X Filé ao Alho 18cm', desc:'Pão 18cm, alcatra em cubos, alho, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:29.50 },
+        { nome:'X Filé na Mostarda 18cm', desc:'Pão 18cm, alcatra em cubos, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:29.50 },
+        { nome:'X Fratello 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, calabresa, bacon, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha', preco:29.50 },
+        { nome:'X Tudão 18cm', desc:'Pão 18cm, hambúrguer bovino artesanal, frango desfiado, bacon, calabresa, ovo, mussarela, presunto, tomate, alface, milho, maionese artesanal, ketchup, mostarda e batata palha.', preco:38.50 },
+      ]},
+      { id:'sucos', nome:'Sucos Naturais', itens:[
+        { nome:'Suco Polpa Laranja com Acerola 500ml', desc:'Suco natural + água', preco:12.00 },
+        { nome:'Suco Polpa Abacaxi com Hortelã 500ml', desc:'Natural com água', preco:12.00 },
+        { nome:'Suco Polpa Morango Cremoso 500ml', desc:'Polpa de morango + leite', preco:15.00 },
+        { nome:'Suco Polpa Coco Cremoso 500ml', desc:'Polpa de coco + leite', preco:15.00 },
+        { nome:'Suco Polpa Maracujá Cremoso 500ml', desc:'Polpa de maracujá + leite', preco:15.00 },
+      ]},
+      { id:'bebidas', nome:'Bebidas', itens:[
+        { nome:'Coca-Cola 2L', desc:'', preco:15.00 },
+        { nome:'Coca-Cola 2L Zero', desc:'', preco:15.00 },
+        { nome:'Fanta Laranja 2L', desc:'', preco:13.00 },
+        { nome:'Fanta Uva 2L', desc:'', preco:13.00 },
+        { nome:'Sprite 2L', desc:'', preco:13.00 },
+        { nome:'Kuat 2L', desc:'', preco:9.00 },
+        { nome:'Coca-Cola 600ml', desc:'', preco:7.00 },
+        { nome:'Coca-Cola 600ml Zero', desc:'', preco:7.00 },
+        { nome:'Coca-Cola Lata 350ml', desc:'', preco:5.00 },
+        { nome:'Coca-Cola Lata Zero 350ml', desc:'', preco:5.00 },
+        { nome:'Água Tônica Lata 350ml', desc:'', preco:5.00 },
+        { nome:'Schweppes Lata 350ml', desc:'', preco:5.00 },
+        { nome:'Sprite Lata 350ml', desc:'', preco:5.00 },
+        { nome:'Sprite Fresh Lemon', desc:'', preco:5.00 },
+        { nome:'Guaraná Antarctica Lata', desc:'', preco:5.00 },
+        { nome:'Fanta Uva Lata', desc:'', preco:5.00 },
+        { nome:'Fanta Lata 350ml', desc:'', preco:5.00 },
+        { nome:'Suco Del Valle Goiaba 290ml', desc:'', preco:5.00 },
+        { nome:'Suco Del Valle Pêssego 290ml', desc:'', preco:5.00 },
+        { nome:'Suco Del Valle Uva 290ml', desc:'', preco:5.00 },
+        { nome:'Água Mineral', desc:'', preco:3.50 },
+        { nome:'Água com Gás', desc:'', preco:4.50 },
+        { nome:'Monster 473ml', desc:'', preco:13.00 },
+        { nome:'Red Bull 250ml', desc:'', preco:13.00 },
+      ]},
+    ];
+
+    const cart = {};
+    const fmtBRL = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+    const key = (catId, i) => catId + '--' + i;
+
+    const catFiltro = document.getElementById('filtro-categoria');
+    const busca = document.getElementById('busca-cardapio');
+    const categoriasGrid = document.getElementById('categorias-grid');
+    const produtosLista = document.getElementById('produtos-lista');
+    const sacolaItens = document.getElementById('sacola-itens');
+    const sacolaTotal = document.getElementById('sacola-total');
+    const sacolaTotalValor = document.getElementById('sacola-total-valor');
+    const btnWhatsapp = document.getElementById('btn-whatsapp');
+    const cartFloat = document.getElementById('cart-float');
+    const cartFloatBadge = document.getElementById('cart-float-badge');
+    const cartFloatTotal = document.getElementById('cart-float-total');
+
+    catFiltro.innerHTML = '<option value="todas">Todas as categorias</option>' +
+      MENU.map(c => `<option value="${c.id}">${c.nome}</option>`).join('');
+
+    categoriasGrid.innerHTML = MENU.map(c => `
+      <div class="categoria-card" data-cat="${c.id}">
+        <div class="cat-thumb">(opcional, em breve)</div>
+        <strong>${c.nome}</strong>
+        <span>${c.itens.length} itens</span>
+      </div>
+    `).join('');
+
+    function addItem(k, nome, preco){
+      cart[k] = cart[k] || { nome, preco, qtd:0 };
+      cart[k].qtd++;
+      renderProdutos();
+      renderSacola();
+    }
+    function remItem(k){
+      if(!cart[k]) return;
+      cart[k].qtd--;
+      if(cart[k].qtd <= 0) delete cart[k];
+      renderProdutos();
+      renderSacola();
+    }
+
+    const categoriasAbertas = new Set();
+
+    function renderProdutos(){
+      const catSel = catFiltro.value;
+      const termo = busca.value.trim().toLowerCase();
+      const buscando = !!termo;
+      let html = '';
+      MENU.forEach(cat => {
+        if(catSel !== 'todas' && catSel !== cat.id) return;
+        const itensFiltrados = cat.itens
+          .map((it, i) => ({ ...it, idx:i }))
+          .filter(it => !termo || it.nome.toLowerCase().includes(termo) || (it.desc || '').toLowerCase().includes(termo));
+        if(itensFiltrados.length === 0) return;
+
+        const aberta = buscando || categoriasAbertas.has(cat.id);
+        html += `<div class="categoria-grupo${aberta ? ' aberta' : ''}" data-cat-grupo="${cat.id}">
+          <h3><span>${cat.nome}</span><span class="cat-toggle-icon">▾</span></h3>
+          <div class="cat-conteudo"><div class="cat-conteudo-inner">`;
+        itensFiltrados.forEach(it => {
+          const k = key(cat.id, it.idx);
+          const qtd = cart[k] ? cart[k].qtd : 0;
+          html += `
+            <div class="produto-row">
+              <div class="produto-main">
+                ${it.img ? `<img class="produto-thumb" src="${it.img}" alt="${it.nome}" loading="lazy">` : ''}
+                <div class="produto-info">
+                  <strong>${it.nome}</strong>
+                  ${it.desc ? `<p>${it.desc}</p>` : ''}
+                  <span class="preco">${fmtBRL(it.preco)}</span>
+                </div>
+              </div>
+              ${qtd === 0
+                ? `<button class="btn-add" data-add="${k}" data-nome="${it.nome}" data-preco="${it.preco}">Adicionar</button>`
+                : `<div class="stepper">
+                     <button data-rem="${k}">−</button>
+                     <span>${qtd}</span>
+                     <button data-add="${k}" data-nome="${it.nome}" data-preco="${it.preco}">+</button>
+                   </div>`
+              }
+            </div>`;
+        });
+        html += `</div></div></div>`;
+      });
+      produtosLista.innerHTML = html || '<p class="sem-resultado">Nada encontrado. Tenta outro termo ou categoria.</p>';
+
+      produtosLista.querySelectorAll('[data-add]').forEach(btn => {
+        btn.addEventListener('click', () => addItem(btn.dataset.add, btn.dataset.nome, parseFloat(btn.dataset.preco)));
+      });
+      produtosLista.querySelectorAll('[data-rem]').forEach(btn => {
+        btn.addEventListener('click', () => remItem(btn.dataset.rem));
+      });
+      produtosLista.querySelectorAll('.categoria-grupo > h3').forEach(h3 => {
+        h3.addEventListener('click', () => {
+          const grupo = h3.closest('.categoria-grupo');
+          const id = grupo.dataset.catGrupo;
+          if(categoriasAbertas.has(id)){
+            categoriasAbertas.delete(id);
+            grupo.classList.remove('aberta');
+          } else {
+            categoriasAbertas.add(id);
+            grupo.classList.add('aberta');
+          }
+        });
+      });
+    }
+
+    function renderSacola(){
+      const chaves = Object.keys(cart);
+      if(chaves.length === 0){
+        sacolaItens.innerHTML = '<p class="sacola-vazia">Sua sacola está vazia. Escolha algo no cardápio pra começar.</p>';
+        sacolaTotal.style.display = 'none';
+        btnWhatsapp.disabled = true;
+        cartFloat.classList.remove('has-items');
+        return;
+      }
+      let total = 0;
+      let qtdTotal = 0;
+      sacolaItens.innerHTML = chaves.map(k => {
+        const it = cart[k];
+        total += it.preco * it.qtd;
+        qtdTotal += it.qtd;
+        return `
+          <div class="sacola-item">
+            <div><span class="nome">${it.nome}</span> <span class="qtd">x${it.qtd}</span></div>
+            <button class="remover" data-remall="${k}">remover</button>
+          </div>`;
+      }).join('');
+      sacolaTotal.style.display = 'flex';
+      sacolaTotalValor.textContent = fmtBRL(total);
+      btnWhatsapp.disabled = false;
+
+      cartFloatBadge.textContent = qtdTotal;
+      cartFloatTotal.textContent = fmtBRL(total);
+      cartFloat.classList.add('has-items');
+
+      sacolaItens.querySelectorAll('[data-remall]').forEach(btn => {
+        btn.addEventListener('click', () => { delete cart[btn.dataset.remall]; renderProdutos(); renderSacola(); });
+      });
+    }
+
+    function montarPedido(){
+      const chaves = Object.keys(cart);
+      let msg = 'Olá! Quero fazer um pedido na Fratello:\n\n';
+      let total = 0;
+      const itensPedido = [];
+      chaves.forEach(k => {
+        const it = cart[k];
+        total += it.preco * it.qtd;
+        itensPedido.push({ nome: it.nome, qtd: it.qtd, preco: it.preco });
+        msg += `${it.qtd}x ${it.nome} — ${fmtBRL(it.preco * it.qtd)}\n`;
+      });
+      msg += `\nTotal: ${fmtBRL(total)}`;
+      return { msg, total, itensPedido };
+    }
+
+    btnWhatsapp.addEventListener('click', () => {
+      if(Object.keys(cart).length === 0) return;
+      avisoDemo();
+    });
+
+    categoriasGrid.addEventListener('click', e => {
+      const card = e.target.closest('.categoria-card');
+      if(!card) return;
+      catFiltro.value = card.dataset.cat;
+      categoriasGrid.querySelectorAll('.categoria-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      renderProdutos();
+      document.getElementById('produtos-lista').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+    catFiltro.addEventListener('change', () => {
+      renderProdutos();
+      document.getElementById('produtos-lista').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+    busca.addEventListener('input', renderProdutos);
+
+    cartFloat.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('sacola').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxFechar = document.getElementById('lightbox-fechar');
+
+    function abrirLightbox(src, alt){
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('aberto');
+    }
+    function fecharLightbox(){
+      lightbox.classList.remove('aberto');
+      lightboxImg.src = '';
+    }
+
+    produtosLista.addEventListener('click', e => {
+      const thumb = e.target.closest('.produto-thumb');
+      if(!thumb) return;
+      abrirLightbox(thumb.src, thumb.alt);
+    });
+    lightboxFechar.addEventListener('click', fecharLightbox);
+    lightbox.addEventListener('click', e => {
+      if(e.target === lightbox) fecharLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape') fecharLightbox();
+    });
+
+    renderProdutos();
+    renderSacola();
+  })();
+</script>
+
+</body>
+</html>
