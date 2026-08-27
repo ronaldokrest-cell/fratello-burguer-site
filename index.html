@@ -1446,12 +1446,12 @@
           </span>
           <span>A partir das 18 horas, de domingo a domingo</span>
         </div>
-        <a class="footer-item js-whatsapp-link" href="#" target="_blank" rel="noopener">
+        <div class="footer-item">
           <span class="footer-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 01-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1121 11.5z"/></svg>
           </span>
-          <span>(45) 99827-6680</span>
-        </a>
+          <span>Pedido também por WhatsApp</span>
+        </div>
       </div>
     </div>
 
@@ -1467,9 +1467,7 @@
 </div>
 
 <script>
-  const WHATSAPP_NUMBER = "5545998276680";
   const COOLDOWN_PEDIDO_MS = 30000;
-
 
   (function(){
     const slides = document.querySelectorAll('#slideshow .slide');
@@ -1483,12 +1481,6 @@
       dots[current].classList.add('active');
     }, 3000);
   })();
-
-  document.querySelectorAll('.js-whatsapp-link').forEach(el => {
-    el.href = `https://wa.me/${WHATSAPP_NUMBER}`;
-    el.target = '_blank';
-    el.rel = 'noopener';
-  });
 
   (function(){
     const MENU = [
@@ -1758,7 +1750,7 @@
       }
       ultimoEnvioLocal = Date.now();
       const { msg } = montarPedido();
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+      alert('Isso é uma demonstração de portfólio — em um projeto real, esse botão abriria o WhatsApp da loja com o pedido pronto:\n\n' + msg);
     });
 
     categoriasGrid.addEventListener('click', e => {
